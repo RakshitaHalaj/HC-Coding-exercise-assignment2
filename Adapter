@@ -1,0 +1,122 @@
+#The Adapter pattern allows two incompatible objects to work together by converting the interface of one object into an interface expected by the other object.
+#Let's assume an example of a student who becomes an employee after candidate selection process.#We have two model objects Student.java and Employee.java. Student model is for storing the student data. Employee model stores the employee data.
+#code
+#create Student.java file then execute following code
+
+package Adapter;
+
+public class Student {
+	
+	    private int id;
+	    private String name;
+	    private String degree;
+	    private double gpa;
+
+	    public Student(int id, String name, String degree, double gpa) {
+	        this.id = id;
+	        this.name = name;
+	        this.degree = degree;
+	        this.gpa = gpa;
+	    }
+
+	    public int getId() {
+	        return id;
+	    }
+
+	    public String getName() {
+	        return name;
+	    }
+
+	    public String getDegree() {
+	        return degree;
+	    }
+
+	    public double getGpa() {
+	        return gpa;
+	    }
+	}
+
+# Next create Employee.java file then copy and faste code
+
+package Adapter;
+
+public class Employee {
+	private int id;
+    private String name;
+    private String department;
+    private double salary;
+
+    public Employee(int id, String name, String department, double salary) {
+        this.id = id;
+        this.name = name;
+        this.department = department;
+        this.salary = salary;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+
+#then create   CandidateSelectionProcess.java file then copy paste following code
+
+package Adapter;
+
+public class CandidateSelectionProcess {
+	public Employee selectCandidate(Student student) {
+        // Simulate the selection process
+        if (student.getGpa() >= 3.5) {
+            // Create an Employee object from the Student object
+            Employee employee = new Employee(student.getId(), student.getName(), "IT", 50000.0);
+            return employee;
+        } else {
+            return null; // Student is not selected
+        }
+	}
+}
+
+#then create  main.java file then copy paste following code
+
+package Adapter;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Student student = new Student(1, "John Doe", "Computer Science", 3.7);
+        CandidateSelectionProcess process = new CandidateSelectionProcess();
+        Employee employee = process.selectCandidate(student);
+        if (employee != null) {
+            System.out.println("Student is selected as an employee:");
+            System.out.println("ID: " + employee.getId());
+            System.out.println("Name: " + employee.getName());
+            System.out.println("Department: " + employee.getDepartment());
+            System.out.println("Salary: " + employee.getSalary());
+        } else {
+            System.out.println("Student is not selected");
+        }
+   
+
+	}
+
+}
+
+
+
+
+
+
+
+
