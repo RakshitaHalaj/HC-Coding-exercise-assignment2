@@ -1,0 +1,144 @@
+#Use case: Logger
+#Imagine you're building a logging mechanism for your application, and you want to ensure that only one instance of the logger is created throughout the application's lifetime. You can use the Singleton pattern to achieve this.
+// Singleton in Java
+public class Logger {
+    private static Logger instance;
+    private static synchronized Logger getInstance() {
+        if (instance == null) {
+            instance = new Logger();
+        }
+        return instance;
+    }
+
+    private Logger() {} // private constructor
+
+    public void log(String message) {
+        System.out.println("Log: " + message);
+    }
+}
+
+// Usage
+Logger logger = Logger.getInstance();
+logger.log("This is a log message");
+
+#output
+Log: This is a log message
+
+
+#. Factory
+
+#Use case: Database Connection Factory
+
+#Suppose you're building a database-driven application and you want to provide a way to create different types of database connections (e.g., MySQL, PostgreSQL, Oracle) without exposing the underlying implementation details. You can use the Factory pattern to create a factory that returns the appropriate database connection object.
+
+// Factory in Java
+public abstract class DatabaseConnection {
+    public abstract void connect();
+}
+
+public class MySQLConnection extends DatabaseConnection {
+    @Override
+    public void connect() {
+        System.out.println("Connecting to MySQL database");
+    }
+}
+
+public class PostgreSQLConnection extends DatabaseConnection {
+    @Override
+    public void connect() {
+        System.out.println("Connecting to PostgreSQL database");
+    }
+}
+
+public class DatabaseConnectionFactory {
+    public static DatabaseConnection createConnection(String type) {
+        if (type.equals("mysql")) {
+            return new MySQLConnection();
+        } else if (type.equals("postgresql")) {
+            return new PostgreSQLConnection();
+        } else {
+            throw new UnsupportedOperationException("Unsupported database type");
+        }
+    }
+}
+
+// Usage
+DatabaseConnection connection = DatabaseConnectionFactory.createConnection("mysql");
+connection.connect(); // prints "Connecting to MySQL database"
+
+#output
+Connecting to MySQL database
+
+#Use case: Building a Car
+#Imagine you're building a car manufacturing system and you want to provide a way to create different types of cars (e.g., sedan, SUV, truck) with various features (e.g., engine, transmission, color). You can use the Builder pattern to create a builder that constructs a car object step-by-step.
+
+// Builder in Java
+public class Car {
+    private String type;
+    private String engine;
+    private String transmission;
+    private String color;
+
+    public Car(String type, String engine, String transmission, String color) {
+        this.type = type;
+        this.engine = engine;
+        this.transmission = transmission;
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "type='" + type + '\'' +
+                ", engine='" + engine + '\'' +
+                ", transmission='" + transmission + '\'' +
+                ", color='" + color + '\'' +
+                '}';
+    }
+}
+
+public class CarBuilder {
+    private String type;
+    private String engine;
+    private String transmission;
+    private String color;
+
+    public CarBuilder setType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public CarBuilder setEngine(String engine) {
+        this.engine = engine;
+        return this;
+    }
+
+    public CarBuilder setTransmission(String transmission) {
+        this.transmission = transmission;
+        return this;
+    }
+
+    public CarBuilder setColor(String color) {
+        this.color = color;
+        return this;
+    }
+
+    public Car build() {
+        return new Car(type, engine, transmission, color);
+    }
+}
+
+// Usage
+CarBuilder builder = new CarBuilder();
+Car car = builder.setType("sedan")
+                .setEngine("V6")
+                .setTransmission("automatic")
+                .setColor("silver")
+                .build();
+System.out.println(car.toString());
+
+#output
+Car{type='sedan', engine='V6', transmission='automatic', color='silver'}
+
+
+
