@@ -1,0 +1,84 @@
+#1. Chain of responsibility
+#2. Memento
+#3. Observer
+
+#Template Method
+#The Template Method, otherwise known as Template Pattern is all around us. It boils down to defining an abstract class that provides predefined ways to run its methods. Sub-classes that inherit these methods must also follow the way defined in the abstract class.
+
+#In some cases, the abstract class may already include a method implementation, not just instructions, if it's a functionality that will be shared amongst all or most of the sub-classes.
+
+#Implementation
+#In a company, all employees have a few shared responsibilities:
+public abstract class Employee {
+    abstract void work();
+    abstract void takePause();
+    abstract void getPaid();
+    
+    public final void comeToWork() {
+        work();
+        takePause();
+        work();
+        getPaid();
+    }
+}
+
+
+public class Programmer extends Employee {
+
+    @Override
+    void work() {
+        System.out.println("Writing code.");
+    }
+
+    @Override
+    void takePause() {
+        System.out.println("Taking a small break from writing code.");
+    }
+
+    @Override
+    void getPaid() {
+        System.out.println("Getting paid for developing the project.");
+}}
+
+public class Manager extends Employee {
+
+    @Override
+    void work() {
+        System.out.println("Managing other employees.");
+    }
+
+    @Override
+    void takePause() {
+        System.out.println("Taking a small break from managing employees.");
+    }
+
+    @Override
+    void getPaid() {
+        System.out.println("Getting paid for overseeing the development of the project.");
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Programmer();
+        employee.comeToWork();
+     
+        System.out.println();
+        
+        employee = new Manager();
+        employee.comeToWork();
+    }
+}
+
+
+#output
+Writing code.
+Taking a small break from writing code.
+Writing code.
+Getting paid for developing the project.
+
+Managing other employees.
+Taking a small break from managing employees.
+Managing other employees.
+Getting paid for overseeing the development of the project.
